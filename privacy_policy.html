@@ -258,8 +258,8 @@
         <tbody>
           <tr><td><strong>Google Firebase</strong></td><td>Authentication, database, storage, push notifications</td><td>Account data, messages, ride data</td></tr>
           <tr><td><strong>Google Maps</strong></td><td>Maps, route display, location search</td><td>Location coordinates</td></tr>
-          <tr><td><strong>JazzCash</strong></td><td>Payment processing (wallet top-up)</td><td>Transaction amount, reference ID</td></tr>
-          <tr><td><strong>Safepay</strong></td><td>Payment processing (wallet top-up)</td><td>Transaction amount, order ID</td></tr>
+          <tr><td><strong>JazzCash</strong></td><td>Payment processing (wallet top-up &amp; withdrawal)</td><td>Transaction amount, reference ID</td></tr>
+          <tr><td><strong>EasyPaisa</strong></td><td>Payment processing (wallet top-up &amp; withdrawal)</td><td>Transaction amount, reference ID</td></tr>
         </tbody>
       </table>
 
@@ -287,7 +287,7 @@
       <p>RouteBuddy uses an in-app wallet system. Here is how payment data is handled:</p>
       <ul>
         <li>Your <strong>wallet balance and transaction history</strong> are stored securely in Firebase Firestore.</li>
-        <li>Card numbers and sensitive payment credentials are <strong>never stored</strong> on our servers — they are processed directly by JazzCash or Safepay.</li>
+        <li>Payment credentials are <strong>never stored</strong> on our servers — top-ups are processed via JazzCash or EasyPaisa manual transfer, verified by admin before crediting.</li>
         <li>All wallet top-ups and fare deductions are logged as transactions visible to you in the app.</li>
         <li>Withdrawal requests are processed manually by admin and credited to your provided account details.</li>
       </ul>
