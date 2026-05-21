@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Delete Account — RouteBuddy</title>
+  <link rel="icon" type="image/png" href="new_icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --blue:   #1E6FFF;
+      --green:  #00C896;
+      --red:    #EF4444;
+      --dark:   #0A1628;
+      --dark2:  #111D35;
+      --dark3:  #1A2A45;
+      --text:   #E8EDF5;
+      --muted:  #7A90B0;
+      --border: rgba(255,255,255,0.08);
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--dark);
+      color: var(--text);
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(10,22,40,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo-icon { width: 36px; height: 36px; border-radius: 10px; overflow: hidden; }
+    .nav-logo-icon img { width: 100%; height: 100%; object-fit: cover; }
+    .nav-logo span { font-size: 20px; font-weight: 800; color: #fff; }
+    .nav-back { color: var(--blue); text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+    .nav-back:hover { opacity: 0.8; }
+
+    /* ── Hero ── */
+    .hero {
+      background: linear-gradient(135deg, #1a0a0a 0%, #2a1010 100%);
+      border-bottom: 1px solid rgba(239,68,68,0.15);
+      padding: 64px 24px 48px;
+      text-align: center;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.25);
+      color: #F87171; border-radius: 100px;
+      padding: 6px 16px; font-size: 13px; font-weight: 600;
+      margin-bottom: 20px;
+    }
+    .hero h1 { font-size: clamp(28px, 5vw, 40px); font-weight: 800; margin-bottom: 12px; }
+    .hero p { color: var(--muted); font-size: 15px; max-width: 500px; margin: 0 auto; }
+
+    /* ── Container ── */
+    .container { max-width: 680px; margin: 0 auto; padding: 56px 24px 80px; }
+
+    /* ── Warning box ── */
+    .warning-box {
+      background: rgba(239,68,68,0.08);
+      border: 1px solid rgba(239,68,68,0.25);
+      border-radius: 16px; padding: 20px 24px; margin-bottom: 40px;
+      display: flex; gap: 16px; align-items: flex-start;
+    }
+    .warning-icon { font-size: 24px; flex-shrink: 0; margin-top: 2px; }
+    .warning-title { font-size: 15px; font-weight: 700; color: #F87171; margin-bottom: 6px; }
+    .warning-text { font-size: 14px; color: #B8C5D6; line-height: 1.6; }
+
+    /* ── Info box ── */
+    .info-box {
+      background: rgba(30,111,255,0.07);
+      border: 1px solid rgba(30,111,255,0.18);
+      border-radius: 14px; padding: 18px 20px; margin: 24px 0;
+    }
+    .info-box p { color: var(--text); font-size: 14px; margin: 0; }
+
+    /* ── Section ── */
+    section { margin-bottom: 40px; }
+    h2 { font-size: 20px; font-weight: 700; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+    p { color: #B8C5D6; font-size: 15px; margin-bottom: 12px; }
+    p:last-child { margin-bottom: 0; }
+    ul { padding-left: 22px; margin-bottom: 12px; }
+    li { color: #B8C5D6; font-size: 15px; margin-bottom: 8px; }
+    li strong { color: var(--text); }
+
+    /* ── Data table ── */
+    table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+    th { background: var(--dark3); color: var(--muted); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+    td { padding: 12px 14px; border-bottom: 1px solid var(--border); color: #B8C5D6; vertical-align: top; }
+    tr:last-child td { border-bottom: none; }
+    td strong { color: var(--text); }
+    .badge-del { background: rgba(239,68,68,0.15); color: #F87171; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 100px; }
+    .badge-keep { background: rgba(245,158,11,0.12); color: #FCD34D; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 100px; }
+
+    /* ── Steps ── */
+    .steps { display: flex; flex-direction: column; gap: 16px; margin: 20px 0; }
+    .step { display: flex; gap: 16px; align-items: flex-start; }
+    .step-num {
+      width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+      background: rgba(30,111,255,0.15); border: 1px solid rgba(30,111,255,0.3);
+      color: var(--blue); font-size: 14px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .step-body { flex: 1; padding-top: 4px; }
+    .step-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+    .step-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+    /* ── Email CTA ── */
+    .email-cta {
+      background: linear-gradient(135deg, var(--dark2), var(--dark3));
+      border: 1px solid var(--border); border-radius: 20px;
+      padding: 32px; text-align: center; margin-top: 40px;
+    }
+    .email-cta h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+    .email-cta p { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
+    .email-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: linear-gradient(135deg, var(--red), #DC2626);
+      color: #fff; text-decoration: none;
+      font-size: 15px; font-weight: 700;
+      padding: 14px 28px; border-radius: 12px;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .email-btn:hover { opacity: 0.9; transform: translateY(-2px); }
+    .email-note { margin-top: 14px; font-size: 12px; color: var(--muted); }
+
+    /* ── Alternative ── */
+    .alt-box {
+      background: rgba(0,200,150,0.06);
+      border: 1px solid rgba(0,200,150,0.18);
+      border-radius: 14px; padding: 20px 24px; margin-top: 24px;
+    }
+    .alt-title { font-size: 14px; font-weight: 700; color: #34D399; margin-bottom: 10px; }
+    .alt-text { font-size: 13px; color: #B8C5D6; line-height: 1.6; }
+
+    /* ── Footer ── */
+    footer {
+      background: var(--dark2); border-top: 1px solid var(--border);
+      padding: 40px 24px; text-align: center;
+    }
+    .footer-logo { display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; margin-bottom: 12px; }
+    .footer-logo-icon { width: 32px; height: 32px; border-radius: 9px; overflow: hidden; }
+    .footer-logo-icon img { width: 100%; height: 100%; object-fit: cover; }
+    .footer-logo span { font-size: 16px; font-weight: 800; color: #fff; }
+    footer p { color: var(--muted); font-size: 13px; }
+    footer a { color: var(--blue); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 600px) {
+      .hero { padding: 48px 16px 36px; }
+      .container { padding: 40px 16px 60px; }
+      .warning-box { flex-direction: column; gap: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon"><img src="new_icon.png" alt="RouteBuddy" /></div>
+      <span>RouteBuddy</span>
+    </a>
+    <a href="index.html" class="nav-back">← Back to Home</a>
+  </nav>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-badge">⚠️ Account Deletion</div>
+    <h1>Delete Your Account</h1>
+    <p>We're sorry to see you go. This page explains how to permanently delete your RouteBuddy account and what happens to your data.</p>
+  </div>
+
+  <!-- Content -->
+  <div class="container">
+
+    <!-- Warning -->
+    <div class="warning-box">
+      <div class="warning-icon">🗑️</div>
+      <div>
+        <div class="warning-title">This action is permanent and cannot be undone</div>
+        <div class="warning-text">Once your account is deleted, all your profile data, ride history, and wallet balance will be permanently removed. Any remaining wallet balance will be forfeited unless a withdrawal is requested before deletion.</div>
+      </div>
+    </div>
+
+    <!-- How to delete in-app -->
+    <section>
+      <h2>Option 1 — Delete from the App</h2>
+      <p>The easiest way to delete your account is directly from the RouteBuddy app:</p>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-title">Open RouteBuddy</div>
+            <div class="step-desc">Launch the app and make sure you are logged in.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-title">Go to Profile</div>
+            <div class="step-desc">Tap the Profile tab at the bottom of the screen.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-title">Open Settings</div>
+            <div class="step-desc">Tap the Settings icon (⚙️) in the top right corner of your profile.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <div class="step-title">Tap "Delete Account"</div>
+            <div class="step-desc">Scroll down to find the "Delete Account" option in red. Confirm your decision when prompted.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Email request -->
+    <section>
+      <h2>Option 2 — Request via Email</h2>
+      <p>If you cannot access the app, you can request account deletion by emailing us. We will process your request within <strong>7 business days</strong>.</p>
+
+      <div class="info-box">
+        <p>📧 Please send your request from the email address associated with your RouteBuddy account. Include your <strong>registered phone number</strong> or <strong>full name</strong> so we can locate your account.</p>
+      </div>
+
+      <div class="email-cta">
+        <h3>Request Account Deletion</h3>
+        <p>Send us an email and we'll permanently delete your account and all associated data within 7 business days.</p>
+        <a href="mailto:af6781114@gmail.com?subject=Delete%20My%20RouteBuddy%20Account&body=Hello%2C%0A%0AI%20would%20like%20to%20permanently%20delete%20my%20RouteBuddy%20account.%0A%0ARegistered%20email%3A%20%5Byour%20email%5D%0ARegistered%20phone%3A%20%5Byour%20phone%20number%5D%0AFull%20name%3A%20%5Byour%20name%5D%0A%0APlease%20confirm%20once%20my%20account%20has%20been%20deleted.%0A%0AThank%20you." class="email-btn">
+          🗑️ Send Deletion Request
+        </a>
+        <div class="email-note">af6781114@gmail.com · Response within 7 business days</div>
+      </div>
+    </section>
+
+    <!-- What gets deleted -->
+    <section>
+      <h2>What Data Gets Deleted</h2>
+      <p>Here is exactly what happens to your data when your account is deleted:</p>
+      <table>
+        <thead>
+          <tr><th>Data</th><th>Action</th><th>Timeline</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Profile</strong> (name, email, photo, bio)</td><td><span class="badge-del">Deleted</span></td><td>Immediately</td></tr>
+          <tr><td><strong>Wallet balance</strong></td><td><span class="badge-del">Forfeited</span></td><td>Immediately</td></tr>
+          <tr><td><strong>Ride history</strong></td><td><span class="badge-del">Deleted</span></td><td>Immediately</td></tr>
+          <tr><td><strong>Chat messages</strong></td><td><span class="badge-del">Deleted</span></td><td>Immediately</td></tr>
+          <tr><td><strong>Ratings &amp; reviews given</strong></td><td><span class="badge-del">Deleted</span></td><td>Immediately</td></tr>
+          <tr><td><strong>Identity documents</strong> (CNIC, licence)</td><td><span class="badge-del">Deleted</span></td><td>Within 30 days</td></tr>
+          <tr><td><strong>Transaction records</strong></td><td><span class="badge-keep">Retained 5 years</span></td><td>Financial compliance</td></tr>
+          <tr><td><strong>Aggregated analytics</strong> (anonymous)</td><td><span class="badge-keep">Retained</span></td><td>No personal link</td></tr>
+        </tbody>
+      </table>
+
+      <div class="alt-box">
+        <div class="alt-title">💡 Withdraw your balance first</div>
+        <div class="alt-text">If you have a wallet balance, please request a withdrawal before deleting your account. Go to Wallet → Cash Out in the app. Once the account is deleted, the balance cannot be recovered.</div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section>
+      <h2>Questions?</h2>
+      <p>If you have any questions about account deletion or your data, contact our support team:</p>
+      <p>📧 <a href="mailto:af6781114@gmail.com" style="color:var(--blue);">af6781114@gmail.com</a></p>
+      <p>We aim to respond to all requests within 7 business days.</p>
+    </section>
+
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <a href="index.html" class="footer-logo">
+      <div class="footer-logo-icon"><img src="new_icon.png" alt="RouteBuddy" /></div>
+      <span>RouteBuddy</span>
+    </a>
+    <p style="margin-top:12px;">© 2026 RouteBuddy. All rights reserved.</p>
+    <p style="margin-top:6px;">
+      <a href="index.html">Home</a> ·
+      <a href="privacy_policy.html">Privacy Policy</a> ·
+      <a href="delete_account.html">Delete Account</a>
+    </p>
+  </footer>
+
+</body>
+</html>
